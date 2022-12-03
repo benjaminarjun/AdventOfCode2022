@@ -1,4 +1,4 @@
-using AdventOfCode2022.Solvers;
+using AdventOfCode2022.Solvers.Day01;
 
 namespace AdventOfCode2022.Tests
 {

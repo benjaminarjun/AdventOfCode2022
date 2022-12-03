@@ -5,7 +5,7 @@ using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdventOfCode2022.Solvers
+namespace AdventOfCode2022.Solvers.Day01
 {
     public class CalorieCounter
     {
@@ -40,7 +40,7 @@ namespace AdventOfCode2022.Solvers
                 calorieCounts.Add(sum);
             }
 
-            this.CalorieCounts = calorieCounts;
+            CalorieCounts = calorieCounts;
         }
 
         public int GetMax()
