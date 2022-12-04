@@ -14,3 +14,7 @@ string day2Data = DataLoader.GetDataForDay(2);
 var encryptedRockPaperScissorsSimulator = new EncryptedRockPaperScissorsSimulator(day2Data);
 
 Console.WriteLine($"Day 2 Part 1:  {encryptedRockPaperScissorsSimulator.GetPlayerTotalScore()}");
+
+var encryptedRockPaperScissorsSimulatorAlt = new EncryptedRockPaperScissorsSimulator(day2Data, rhColStrategy: RhColStrategy.LossDrawWin);
+
+Console.WriteLine($"Day 2 Part 2:  {encryptedRockPaperScissorsSimulatorAlt.GetPlayerTotalScore()}");

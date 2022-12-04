@@ -22,5 +22,16 @@ namespace AdventOfCode2022.Tests
 
             Assert.AreEqual(expected, totalScore);
         }
+
+        [TestMethod]
+        public void TestExample1WithAlternateRhColInterpretation()
+        {
+            var simulator = new EncryptedRockPaperScissorsSimulator(input, rhColStrategy: RhColStrategy.LossDrawWin);
+
+            int expected = 12;
+            int totalScore = simulator.GetPlayerTotalScore();
+
+            Assert.AreEqual(expected, totalScore);
+        }
     }
 }

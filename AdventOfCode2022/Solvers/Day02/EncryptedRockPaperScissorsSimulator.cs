@@ -19,15 +19,16 @@ namespace AdventOfCode2022.Solvers.Day02
             { "C", Move.Scissors },
         };
 
-        private Dictionary<string, Move> playerDecryptionKey = new Dictionary<string, Move>
+        private Dictionary<string, Move> rpsPlayerDecryptionKey = new Dictionary<string, Move>
         {
             { "X", Move.Rock },
             { "Y", Move.Paper },
             { "Z", Move.Scissors },
         };
 
-        public EncryptedRockPaperScissorsSimulator(string gameInput)
+        public EncryptedRockPaperScissorsSimulator(string gameInput, RhColStrategy rhColStrategy = RhColStrategy.RockPaperScissors)
         {
+
             GameMoves = new List<Tuple<Move, Move>>();
 
             string[] gameLines = gameInput.Split("\r\n");
@@ -37,7 +38,33 @@ namespace AdventOfCode2022.Solvers.Day02
                 var encryptedMoves = line.Split(" ");
 
                 Move opponentMove = GetDecryptedMove(opponentDecryptionKey, encryptedMoves[0]);
-                Move playerMove = GetDecryptedMove(playerDecryptionKey, encryptedMoves[1]);
+                Move playerMove;
+
+                // Assign moves to the encrypted player move values. We can either interpret these as
+                // Rock, Paper, Scissors, or the moves that lead to a Loss, Draw, or Win given the opponent's move.
+                if (rhColStrategy == RhColStrategy.RockPaperScissors)
+                {
+                    playerMove = GetDecryptedMove(rpsPlayerDecryptionKey, encryptedMoves[1]);
+                }
+                else
+                {
+                    // This lookup maps the possible opponent move + desired outcome to the move the player must make
+                    // in order to ensure that outcome.
+                    var wdlLookup = new Dictionary<Tuple<Move, string>, Move>
+                    {
+                        { new Tuple<Move, string>(Move.Rock, "X"), Move.Scissors },
+                        { new Tuple<Move, string>(Move.Rock, "Y"), Move.Rock },
+                        { new Tuple<Move, string>(Move.Rock, "Z"), Move.Paper },
+                        { new Tuple<Move, string>(Move.Paper, "X"), Move.Rock },
+                        { new Tuple<Move, string>(Move.Paper, "Y"), Move.Paper },
+                        { new Tuple<Move, string>(Move.Paper, "Z"), Move.Scissors },
+                        { new Tuple<Move, string>(Move.Scissors, "X"), Move.Paper },
+                        { new Tuple<Move, string>(Move.Scissors, "Y"), Move.Scissors },
+                        { new Tuple<Move, string>(Move.Scissors, "Z"), Move.Rock },
+                    };
+
+                    playerMove = wdlLookup[new Tuple<Move, string>(opponentMove, encryptedMoves[1])];
+                }
 
                 GameMoves.Add(new Tuple<Move, Move>(opponentMove, playerMove));
             }
