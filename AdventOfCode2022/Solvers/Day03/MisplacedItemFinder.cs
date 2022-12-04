@@ -8,9 +8,19 @@ namespace AdventOfCode2022.Solvers.Day03
 {
     public class MisplacedItemFinder
     {
-        public MisplacedItemFinder() { }
+        public string[] Rucksacks { get; }
 
-        public char FindMisplacedItem(string rucksack)
+        public MisplacedItemFinder(string rucksacksRaw)
+        {
+            Rucksacks = rucksacksRaw.Split("\r\n");
+
+            if (Rucksacks.Length % 3 != 0)
+            {
+                throw new Exception("List of rucksacks must have length divisible by 3.");
+            }
+        }
+
+        char FindMisplacedItem(string rucksack)
         {
             if (rucksack.Length % 2 != 0)
             {
@@ -31,9 +41,9 @@ namespace AdventOfCode2022.Solvers.Day03
             return misplacedItem;
         }
 
-        public List<char> FindMisplacedItems(IEnumerable<string> rucksacks)
+        public List<char> FindMisplacedItems()
         {
-            return rucksacks.Select(r => FindMisplacedItem(r)).ToList();
+            return Rucksacks.Select(r => FindMisplacedItem(r)).ToList();
         }
 
         public static int GetPriority(char c)
@@ -58,6 +68,36 @@ namespace AdventOfCode2022.Solvers.Day03
             offset -= 1;
 
             return (int)c - offset;
+        }
+
+        public static char FindIdentityBadge(string rucksack1, string rucksack2, string rucksack3)
+        {
+            return rucksack1
+                .ToArray()
+                .Where(z => rucksack2.Contains(z) && rucksack3.Contains(z))
+                .Distinct()
+                .Single();
+        }
+
+        public List<char> FindIdentityBadges()
+        {
+            int i = 0;
+            var identityBadges = new List<char>();
+
+            while (i < Rucksacks.Length)
+            {
+                char badge = MisplacedItemFinder.FindIdentityBadge(
+                    Rucksacks[i],
+                    Rucksacks[i + 1],
+                    Rucksacks[i + 2]
+                );
+
+                identityBadges.Add(badge);
+
+                i += 3;
+            }
+
+            return identityBadges;
         }
     }
 }

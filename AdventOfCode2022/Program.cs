@@ -25,12 +25,15 @@ Console.WriteLine($"Day 2 Part 2:  {encryptedRockPaperScissorsSimulatorAlt.GetPl
 
 // Day 3
 string day3data = DataLoader.GetDataForDay(3);
-var misplacedItemFinder = new MisplacedItemFinder();
+var misplacedItemFinder = new MisplacedItemFinder(day3data);
 
-string[] part1Inputs = day3data.Split("\r\n");
-int part1Answer = misplacedItemFinder.FindMisplacedItems(part1Inputs)
+int part1Answer = misplacedItemFinder.FindMisplacedItems()
+    .Select(z => MisplacedItemFinder.GetPriority(z))
+    .Sum();
+
+int part2Answer = misplacedItemFinder.FindIdentityBadges()
     .Select(z => MisplacedItemFinder.GetPriority(z))
     .Sum();
 
 Console.WriteLine($"Day 3 Part 1:  {part1Answer}");
-
+Console.WriteLine($"Day 3 Part 2:  {part2Answer}");

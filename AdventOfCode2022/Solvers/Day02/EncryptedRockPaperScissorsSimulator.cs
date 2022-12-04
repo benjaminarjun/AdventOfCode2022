@@ -28,7 +28,6 @@ namespace AdventOfCode2022.Solvers.Day02
 
         public EncryptedRockPaperScissorsSimulator(string gameInput, RhColStrategy rhColStrategy = RhColStrategy.RockPaperScissors)
         {
-
             GameMoves = new List<Tuple<Move, Move>>();
 
             string[] gameLines = gameInput.Split("\r\n");
