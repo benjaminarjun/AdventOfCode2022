@@ -60,3 +60,15 @@ IEnumerable<char> topCrateEachStack = rearranger.Stacks
 string topCrateEachStackStr = string.Join("", topCrateEachStack);
 
 Console.WriteLine($"Day 5 Part 1:  {topCrateEachStackStr}");
+
+var fancyRearranger = new CrateRearranger(day5Data, model: CraneModel.CrateMover9001);
+fancyRearranger.Rearrange();
+
+IEnumerable<char> fancyTopCrateEachStack = fancyRearranger.Stacks
+    .Select(kvp => new { ix = kvp.Key, value = kvp.Value.Peek() })
+    .OrderBy(z => z.ix)
+    .Select(z => z.value);
+
+string fancyTopCrateEachStackStr = string.Join("", fancyTopCrateEachStack);
+
+Console.WriteLine($"Day 5 Part 2:  {fancyTopCrateEachStackStr}");

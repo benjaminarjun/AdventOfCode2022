@@ -66,5 +66,20 @@ move 1 from 1 to 2";
             Assert.AreEqual(stack2Expected, rearranger.Stacks[2].Peek());
             Assert.AreEqual(stack3Expected, rearranger.Stacks[3].Peek());
         }
+
+        [TestMethod]
+        public void TestCrateModel9001CanMoveMultipleCratesAtOnce()
+        {
+            var rearranger = new CrateRearranger(input, model: CraneModel.CrateMover9001);
+            rearranger.Rearrange();
+
+            char stack1Expected = 'M';
+            char stack2Expected = 'C';
+            char stack3Expected = 'D';
+
+            Assert.AreEqual(stack1Expected, rearranger.Stacks[1].Peek());
+            Assert.AreEqual(stack2Expected, rearranger.Stacks[2].Peek());
+            Assert.AreEqual(stack3Expected, rearranger.Stacks[3].Peek());
+        }
     }
 }

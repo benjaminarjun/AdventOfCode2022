@@ -12,9 +12,12 @@ namespace AdventOfCode2022.Solvers.Day05
 
         public List<StackMove> StackMoves { get; private set; }
 
-        public CrateRearranger(string input)
+        private CraneModel craneModel;
+
+        public CrateRearranger(string input, CraneModel model = CraneModel.CrateMover9000)
         {
             ParseInput(input);
+            craneModel = model;
         }
 
         private void ParseInput(string input)
@@ -79,15 +82,42 @@ namespace AdventOfCode2022.Solvers.Day05
         {
             foreach (StackMove move in StackMoves)
             {
-                PerformMove(move);
+                if (craneModel == CraneModel.CrateMover9000)
+                {
+                    PerformSingleCrateMove(move);
+                }
+                else
+                {
+                    PerformMultiCrateMove(move);
+                }
             }
         }
 
-        private void PerformMove(StackMove move)
+        private void PerformSingleCrateMove(StackMove move)
         {
+            // for the CrateModel9000
+
             for (int i = 0; i < move.NumToMove; i++)
             {
                 char crate = Stacks[move.FromIndex].Pop();
+                Stacks[move.ToIndex].Push(crate);
+            }
+        }
+
+        private void PerformMultiCrateMove(StackMove move)
+        {
+            // for the CrateModel900
+
+            var intermediate = new Stack<char>();
+            for (int i = 0; i < move.NumToMove; i++)
+            {
+                char crate = Stacks[move.FromIndex].Pop();
+                intermediate.Push(crate);
+            }
+
+            for (int i = 0; i < move.NumToMove; i++)
+            {
+                char crate = intermediate.Pop();
                 Stacks[move.ToIndex].Push(crate);
             }
         }
