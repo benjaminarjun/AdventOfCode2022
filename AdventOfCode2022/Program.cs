@@ -2,6 +2,7 @@
 using AdventOfCode2022.Solvers.Day01;
 using AdventOfCode2022.Solvers.Day02;
 using AdventOfCode2022.Solvers.Day03;
+using AdventOfCode2022.Solvers.Day04;
 
 
 // Day 1
@@ -37,3 +38,10 @@ int part2Answer = misplacedItemFinder.FindIdentityBadges()
 
 Console.WriteLine($"Day 3 Part 1:  {part1Answer}");
 Console.WriteLine($"Day 3 Part 2:  {part2Answer}");
+
+// Day 4
+string day4Data = DataLoader.GetDataForDay(4);
+var overlapFinder = new SegmentOverlapFinder(day4Data);
+
+Console.WriteLine($"Day 4 Part 1:  {overlapFinder.GetNumFullyContainingSegmentPairs()}");
+Console.WriteLine($"Day 4 Part 2:  {overlapFinder.GetNumOverlappingSegmentPairs()}");
