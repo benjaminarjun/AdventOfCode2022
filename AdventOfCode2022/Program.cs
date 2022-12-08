@@ -3,6 +3,7 @@ using AdventOfCode2022.Solvers.Day01;
 using AdventOfCode2022.Solvers.Day02;
 using AdventOfCode2022.Solvers.Day03;
 using AdventOfCode2022.Solvers.Day04;
+using AdventOfCode2022.Solvers.Day05;
 
 
 // Day 1
@@ -45,3 +46,17 @@ var overlapFinder = new SegmentOverlapFinder(day4Data);
 
 Console.WriteLine($"Day 4 Part 1:  {overlapFinder.GetNumFullyContainingSegmentPairs()}");
 Console.WriteLine($"Day 4 Part 2:  {overlapFinder.GetNumOverlappingSegmentPairs()}");
+
+// Day 5
+string day5Data = DataLoader.GetDataForDay(5);
+var rearranger = new CrateRearranger(day5Data);
+rearranger.Rearrange();
+
+IEnumerable<char> topCrateEachStack = rearranger.Stacks
+    .Select(kvp => new { ix = kvp.Key, value = kvp.Value.Peek() })
+    .OrderBy(z => z.ix)
+    .Select(z => z.value);
+
+string topCrateEachStackStr = string.Join("", topCrateEachStack);
+
+Console.WriteLine($"Day 5 Part 1:  {topCrateEachStackStr}");
