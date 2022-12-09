@@ -10,35 +10,41 @@ namespace AdventOfCode2022.Solvers.Day06
     {
         public int StartOfPacketMarkerEnd { get; }
 
+        public int StartOfMessageMarkerEnd { get; }
+
         private string buffer;
 
         public CommDevice(string buffer)
         {
             this.buffer = buffer;
 
-            // default this to -1 so we can check its value without errors
-            StartOfPacketMarkerEnd = -1;
-            
-            // identify the start-of-packet-marker and record the index of its last character
-            int i = 0;
-            int startOfPacketMarkerLength = 4;
+            // identify markers and record the indexes of their last characters
+            StartOfPacketMarkerEnd = FindMarkerEnd(4);
+            StartOfMessageMarkerEnd = FindMarkerEnd(14);
+        }
 
-            while (StartOfPacketMarkerEnd < 0)
+        private int FindMarkerEnd(int markerLen)
+        {
+            int i = 0;
+
+            while (i + markerLen < this.buffer.Length)
             {
-                string thisChunk = buffer.Substring(i, startOfPacketMarkerLength);
+                string thisChunk = buffer.Substring(i, markerLen);
 
                 int numDistinct = thisChunk
                     .ToCharArray()
                     .Distinct()
                     .Count();
 
-                if (numDistinct == startOfPacketMarkerLength)
+                if (numDistinct == markerLen)
                 {
-                    StartOfPacketMarkerEnd = i + startOfPacketMarkerLength;
+                    return i + markerLen;
                 }
 
                 i++;
             }
+
+            throw new Exception($"Could not find a marker of specified length {markerLen} in the buffer.");
         }
     }
 }

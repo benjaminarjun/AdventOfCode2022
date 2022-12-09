@@ -80,3 +80,4 @@ string day6Data = DataLoader.GetDataForDay(6);
 var commDevice = new CommDevice(day6Data);
 
 Console.WriteLine($"Day 6 Part 1:  {commDevice.StartOfPacketMarkerEnd}");
+Console.WriteLine($"Day 6 Part 2:  {commDevice.StartOfMessageMarkerEnd}");
