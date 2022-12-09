@@ -4,6 +4,7 @@ using AdventOfCode2022.Solvers.Day02;
 using AdventOfCode2022.Solvers.Day03;
 using AdventOfCode2022.Solvers.Day04;
 using AdventOfCode2022.Solvers.Day05;
+using AdventOfCode2022.Solvers.Day06;
 
 
 // Day 1
@@ -72,3 +73,10 @@ IEnumerable<char> fancyTopCrateEachStack = fancyRearranger.Stacks
 string fancyTopCrateEachStackStr = string.Join("", fancyTopCrateEachStack);
 
 Console.WriteLine($"Day 5 Part 2:  {fancyTopCrateEachStackStr}");
+
+// Day 6
+
+string day6Data = DataLoader.GetDataForDay(6);
+var commDevice = new CommDevice(day6Data);
+
+Console.WriteLine($"Day 6 Part 1:  {commDevice.StartOfPacketMarkerEnd}");
